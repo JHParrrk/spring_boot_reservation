@@ -1,4 +1,6 @@
 package com.firstspring.reservation.reservation.dto;
 
-public record ReservationDto(String title, String content, String author) {
+import java.time.LocalDateTime;
+
+public record ReservationDto(String customerName, int partySize, LocalDateTime reservationTime) {
 }

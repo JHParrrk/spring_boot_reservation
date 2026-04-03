@@ -1,47 +1,42 @@
 package com.firstspring.reservation.reservation.entity;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String content;
-    private String author;
+
+    private String customerName;
+    private int partySize;
+    private LocalDateTime reservationTime;
+    private String status; // PENDING, CONFIRMED, CANCELLED
     private LocalDateTime createdAt;
 
-    public Reservation(Long id, String title, String content, String author) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.author = author;
+    @Builder
+    public Reservation(String customerName, int partySize, LocalDateTime reservationTime) {
+        this.customerName = customerName;
+        this.partySize = partySize;
+        this.reservationTime = reservationTime;
+        this.status = "PENDING";
         this.createdAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
+    public void confirm() {
+        this.status = "CONFIRMED";
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void cancel() {
+        this.status = "CANCELLED";
     }
 }
